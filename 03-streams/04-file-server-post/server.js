@@ -40,7 +40,7 @@ server.on('request', (req, res) => {
       });
 
       outStream.on('error', (error) => {
-        const reg = /\w+\//gi;
+        const reg = /\w+.?\w+\//gi;
         if (error.code === 'ENOENT') {
           if (reg.test(pathname)) {
             res.statusCode = 400;
