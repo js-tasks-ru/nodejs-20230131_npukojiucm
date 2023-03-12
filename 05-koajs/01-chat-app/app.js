@@ -21,12 +21,14 @@ router.post('/publish',
       const message = ctx.request.body.message;
 
       if (!message) {
-        ctx.throw(404);
+        return;
       }
 
       clients.forEach(client => {
         client(message);
       });
+
+      ctx.res.statusCode = 201;
 
       clients.length = 0;
     });
