@@ -13,7 +13,6 @@ const clients = [];
 router.get('/subscribe', async (ctx, next) => {
   const body = await new Promise(resolve => clients.push(resolve));
   ctx.body = body;
-  
 });
 
 router.post('/publish',

@@ -28,10 +28,8 @@ server.on('request', (req, res) => {
         limitedStream.write(chunk);
       });
 
-      req.on('end', () => {
-        limitedStream.end();
+      limitedStream.on('end', () => {
         res.statusCode = 201;
-        res.end('Все ок');
       });
 
       req.on('aborted', () => {
