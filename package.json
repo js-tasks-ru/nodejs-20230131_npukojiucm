@@ -4,7 +4,8 @@
   "description": "Node.JS Course Materials",
   "scripts": {
     "test": "cross-env NODE_ENV=test mocha --no-warnings --ignore=node_modules/** **/*.test.js",
-    "lint": "eslint --ignore-pattern 'public' --ignore-pattern '*.test.js' --ignore-pattern 'client' ."
+    "lint": "eslint --ignore-pattern 'public' --ignore-pattern '*.test.js' --ignore-pattern 'client' .",
+    "localtest": "mocha"
   },
   "keywords": [],
   "author": "Sergey Zelenov",
