@@ -20,10 +20,6 @@ server.on('request', (req, res) => {
         break;
       }
 
-      const limitedStream = new LimitSizeStream({limit: 1048576});
-      const outStream = fs.createWriteStream(filepath);
-      limitedStream.pipe(outStream);
-
       req.on('data', (chunk) => {
         limitedStream.write(chunk);
       });
@@ -57,6 +53,10 @@ server.on('request', (req, res) => {
           res.end();
         }
       });
+
+      const limitedStream = new LimitSizeStream({limit: 1048576});
+      const outStream = fs.createWriteStream(filepath);
+      limitedStream.pipe(outStream);
 
       break;
     default:
