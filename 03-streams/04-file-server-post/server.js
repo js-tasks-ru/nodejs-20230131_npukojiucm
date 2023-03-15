@@ -24,38 +24,30 @@ server.on('request', (req, res) => {
       const outStream = fs.createWriteStream(filepath);
       limitedStream.pipe(outStream);
 
-      req.on('data', (chunk) => {
-        limitedStream.write(chunk);
-      });
+      req.pipe(limitedStream);
 
-      limitedStream.on('end', () => {
+      outStream.on('finish', () => {
         res.statusCode = 201;
-        limitedStream.closed();
+        res.end('Ok');
       });
 
-      req.on('aborted', () => {
+      req.on('error', () => {
         limitedStream.destroy();
-        fs.unlink(filepath, (err) => {
-          if (err) throw err;
-        });
+        outStream.destroy();
+        fs.unlinkSync(filepath);
       });
 
       outStream.on('error', (error) => {
-        const reg = /\w+.?\w+\//gi;
         if (error.code === 'ENOENT') {
-          if (reg.test(pathname)) {
-            limitedStream.destroy();
-            res.statusCode = 400;
-            res.end('Вложенные пути не поддерживаются');
-          }
+          res.statusCode = 400;
+          res.end('Вложенные пути не поддерживаются');
         }
       });
 
       limitedStream.on('error', (error) => {
         if (error.code === 'LIMIT_EXCEEDED') {
-          fs.unlink(filepath, (err) => {
-            if (err) throw err;
-          });
+          outStream.destroy();
+          fs.unlinkSync(filepath);
           res.statusCode = 413;
           res.end('Тяжело');
         } else {
