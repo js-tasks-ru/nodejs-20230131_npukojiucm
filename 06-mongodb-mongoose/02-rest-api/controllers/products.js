@@ -48,9 +48,10 @@ module.exports.productById = async function productById(ctx, next) {
     ctx.body = 'Категория не найдена';
     return;
   }
-
+  const result = mapProduct(product)
+  
   ctx.body = {
-    product: mapProduct(product),
+    product: result,
   };
 };
 
