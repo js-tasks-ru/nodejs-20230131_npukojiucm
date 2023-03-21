@@ -1,4 +1,4 @@
-module.exports = class Validator {
+module.exports = class Validator { // 
   constructor(rules) {
     this.rules = rules;
   }
@@ -6,7 +6,8 @@ module.exports = class Validator {
   validate(obj) {
     const errors = [];
 
-    for (const field of Object.keys(this.rules)) {
+    for (const field of Object.keys(obj)) {
+    // for (const field of Object.keys(this.rules)) {
       const rules = this.rules[field];
 
       const value = obj[field];
@@ -14,7 +15,7 @@ module.exports = class Validator {
 
       if (type !== rules.type) {
         errors.push({field, error: `expect ${rules.type}, got ${type}`});
-        return errors;
+        continue;
       }
 
       switch (type) {
@@ -40,3 +41,18 @@ module.exports = class Validator {
     return errors;
   }
 };
+
+// const validator = new Validator({
+//   name: {
+//     type: 'string',
+//     min: 5,
+//     max: 10, 
+//   },
+//   age: {
+//     type: 'number',
+//     min: 18,
+//     max: 27,
+//   }
+// });
+
+// console.log(validator.validate({ name: 1}))
