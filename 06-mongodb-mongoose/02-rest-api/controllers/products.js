@@ -2,13 +2,13 @@ const Product = require('../models/Product');
 const mapProduct = require('../mappers/product');
 const ObjectId = require('mongoose').Types.ObjectId;
 
-// function isValidObjectId(id) {
-//   if (ObjectId.isValid(id)) {
-//     if ((String)(new ObjectId(id)) === id) return true;
-//     return false;
-//   }
-//   return false;
-// }
+function isValidObjectId(id) {
+  if (ObjectId.isValid(id)) {
+    if ((String)(new ObjectId(id)) === id) return true;
+    return false;
+  }
+  return false;
+}
 
 module.exports.productsBySubcategory = async function productsBySubcategory(ctx, next) {
   ctx.body = {};
