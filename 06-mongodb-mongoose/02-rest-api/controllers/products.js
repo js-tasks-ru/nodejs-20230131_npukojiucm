@@ -11,19 +11,26 @@ function isValidObjectId(id) {
 }
 
 module.exports.productsBySubcategory = async function productsBySubcategory(ctx, next) {
-  ctx.body = {};
-
-  return next();
-};
-
-module.exports.productList = async function productList(ctx, next) {
   const {subcategory} = ctx.query;
+  
+  if (!subcategory) return next();
+
   const product = await Product.find({
     'subcategory': subcategory,
   });
-
+  
   ctx.body = {
     products: product.map(
+        (product) => mapProduct(product),
+    ),
+  };
+};
+
+module.exports.productList = async function productList(ctx, next) {
+  const products = await Product.find();
+
+  ctx.body = {
+    products: products.map(
         (product) => mapProduct(product),
     ),
   };
