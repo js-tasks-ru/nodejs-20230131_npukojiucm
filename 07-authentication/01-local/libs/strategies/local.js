@@ -9,9 +9,9 @@ module.exports = new LocalStrategy(
         email: email,
       })
 
-      if (!user) {
+      if (user === null) {
         return done(null, null, 'Нет такого пользователя');
       }
-      done(null, false, 'Стратегия подключена, но еще не настроена');
+      return done(null, false, 'Стратегия подключена, но еще не настроена');
     },
 );
