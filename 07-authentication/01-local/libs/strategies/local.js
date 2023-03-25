@@ -4,7 +4,7 @@ const LocalStrategy = require('passport-local').Strategy;
 
 module.exports = new LocalStrategy(
     {usernameField: 'email', session: false},
-    async function(email, password, done) {
+    function(email, password, done) {
       const user = await User.findOne({'email': email});
       
       if (!user) {
