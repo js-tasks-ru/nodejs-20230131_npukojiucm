@@ -19,13 +19,4 @@ module.exports = async function authenticate(strategy, email, displayName, done)
   } catch (err) {
     done(err);
   }
-  // User.findOne({email: email}, async function (err, user) {
-  //   if (!user) {
-  //     const newUser = new User({email: email, displayName: displayName});
-  //     if (err) return done(err, false);
-  //   }
-
-  //   return done(null, user, 'Все ок');
-  // })
-  
 };
