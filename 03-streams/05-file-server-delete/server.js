@@ -13,16 +13,21 @@ server.on('request', (req, res) => {
 
   switch (req.method) {
     case 'DELETE':
-      if (!fs.existsSync(filepath)) {
-        res.statusCode = 404;
-        res.end('File not found');
-      }
-
       const inValidPath = new RegExp('\/');
       if (inValidPath.test(pathname)) {
         res.statusCode = 400;
         res.end('Nested paths are not supported');
+        break;
       }
+
+      if (!fs.existsSync(filepath)) {
+        console.log('мы тут');
+        res.statusCode = 404;
+        res.end('File not found');
+        break;
+      }
+
+
 
       fs.unlinkSync(filepath);
       res.statusCode = 200;
