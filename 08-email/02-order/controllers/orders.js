@@ -1,5 +1,4 @@
 const Order = require('../models/Order');
-const User = require('../models/User');
 const sendMail = require('../libs/sendMail');
 const mapOrder = require('../mappers/order');
 
@@ -22,7 +21,7 @@ module.exports.checkout = async function checkout(ctx, next) {
     template: 'order-confirmation',
     locals: {
       id: order.id,
-      product: order.product.title,
+      product: order.product,
     },
     to: ctx.user.email,
     subject: 'Подтвердите почту',
@@ -44,5 +43,7 @@ module.exports.getOrdersList = async function ordersList(ctx, next) {
     user: ctx.user.id,
   }).populate('product');
 
-  ctx.body = orders.map((order) => mapOrder(order));
+  ctx.body = {
+    orders: orders.map((order) => mapOrder(order)),
+  };
 };
