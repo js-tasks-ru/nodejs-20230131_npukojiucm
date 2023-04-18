@@ -24,7 +24,7 @@ server.on('request', (req, res) => {
         res.end('Nested paths are not supported');
       }
 
-      fs.unlinkSync(pathname);
+      fs.unlinkSync(filepath);
       res.statusCode = 200;
       res.end('Файл успешно удален');
 
