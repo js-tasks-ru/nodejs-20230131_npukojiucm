@@ -83,7 +83,7 @@ describe('email/order', () => {
       const phoneField = Order.schema.obj.phone;
 
       expect(phoneField, 'у модели есть свойство phone').to.be.not.undefined;
-      expect(phoneField.required, 'свойство phone является обязательным').to.be.true;
+      expect(phoneField.required[0], 'свойство phone является обязательным').to.be.true;
       expect(phoneField.type, 'тип свойства phone - строка').to.be.equal(String);
     });
   });

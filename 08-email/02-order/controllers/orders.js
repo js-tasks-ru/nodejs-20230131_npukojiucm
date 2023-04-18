@@ -13,8 +13,6 @@ module.exports.checkout = async function checkout(ctx, next) {
     });
     await order.save();
 
-    console.log(ctx.user['email']);
-
     await sendMail({
       template: 'order-confirmation',
       locals: {
