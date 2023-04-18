@@ -287,7 +287,7 @@ describe('email/order', () => {
       const order = await Order.findById(response.data.order);
 
       expect(order.user.toString(), 'id пользователя должен соответствовать авторизованому,' +
-        'параметр в теле запроса должен быть проигнорирован').to.be.equal(user.id);
+        'параметр в теле запроса должен быть проигнорирован').to.be.equal(user.id.toString());
     });
 
     it('вернуть ошибку со статус кодом 400 и описанием ' +
@@ -333,127 +333,127 @@ describe('email/order', () => {
     });
   });
 
-  // describe('запрос GET /api/orders должен', () => {
-  //   before((done) => {
-  //     server = app.listen(port, done);
-  //   });
-  //
-  //   beforeEach(async () => {
-  //     await cleanUpDB();
-  //   });
-  //
-  //   after(async () => {
-  //     await cleanUpDB();
-  //     server.close();
-  //   });
-  //
-  //   it('вернуть список заказов текущего пользователя', async () => {
-  //     const userData = {
-  //       email: 'user@mail.com',
-  //       displayName: 'user',
-  //       password: '123123',
-  //     };
-  //     const token = 'token';
-  //     const user = await createUserAndSession(userData, token);
-  //
-  //     const categories = [
-  //       {
-  //         '_id': ObjectId('5d2f7e66a5a47618d7080a0f'),
-  //         'title': 'Детские товары и игрушки',
-  //         'subcategories': [
-  //           {
-  //             '_id': ObjectId('5d2f7e66a5a47618d7080a15'),
-  //             'title': 'Прогулки и детская комната',
-  //           },
-  //         ],
-  //       },
-  //     ];
-  //
-  //     await Category.insertMany(categories);
-  //
-  //     const products = [
-  //       {
-  //         '_id': ObjectId('5d2f7e66a5a47618d7080a1f'),
-  //         'title': 'Коляска Adamex Barletta 2 in 1',
-  //         'description': 'description',
-  //         'category': categories[0]._id,
-  //         'subcategory': categories[0].subcategories[0]._id,
-  //         'images': [
-  //           'http://magazilla.ru/jpg_zoom1/598194.jpg',
-  //         ],
-  //         'price': 21230,
-  //       },
-  //       {
-  //         '_id': ObjectId('5d2f7e66a5a47618d7080a2f'),
-  //         'title': 'Коляска Peg Perego Si',
-  //         'description': 'description',
-  //         'category': categories[0]._id,
-  //         'subcategory': categories[0].subcategories[0]._id,
-  //         'images': [
-  //           'http://magazilla.ru/jpg_zoom1/164281.jpg',
-  //         ],
-  //         'price': 15818,
-  //       },
-  //       {
-  //         '_id': ObjectId('5d2f7e66a5a47618d7080a3f'),
-  //         'title': 'Коляска Adamex Barletta 3 in 1',
-  //         'description': 'description',
-  //         'category': categories[0]._id,
-  //         'subcategory': categories[0].subcategories[0]._id,
-  //         'images': [
-  //           'http://magazilla.ru/jpg_zoom1/1220903.jpg',
-  //         ],
-  //         'price': 26701,
-  //       },
-  //     ];
-  //
-  //     await Product.insertMany(products);
-  //
-  //     const orders = [
-  //       {
-  //         product: products[0]._id,
-  //         phone: '1234567800',
-  //         address: 'home',
-  //         user: user.id,
-  //       },
-  //       {
-  //         product: products[1]._id,
-  //         phone: '1234567800',
-  //         address: 'home',
-  //         user: user.id,
-  //       },
-  //       // this order shouldn't be returned
-  //       {
-  //         product: products[2]._id,
-  //         phone: '1234567800',
-  //         address: 'home',
-  //         user: ObjectId(),
-  //       },
-  //     ];
-  //
-  //     await Order.insertMany(orders);
-  //
-  //     const {data} = await request({
-  //       method: 'get',
-  //       url: serverURL,
-  //       headers: {
-  //         'Authorization': `Bearer ${token}`,
-  //       },
-  //     });
-  //
-  //     expect(data.orders, 'ключ orders в ответе должел быть массивом').to.be.an('array');
-  //     expect(data.orders, 'в ответе должно быть 2 заказа').to.have.lengthOf(2);
-  //     expect(data.orders, 'ответ должен содержать только заказы текущего пользователя')
-  //         .to.satisfy(() => data.orders.every((order) => order.user = user.id));
-  //   });
-  //
-  //   it('вернуть ошибку со статусом 401 если пользователь не авторизован', async () => {
-  //     const {status} = await request({
-  //       method: 'post',
-  //       url: serverURL,
-  //     });
-  //
-  //     expect(status, 'статус код ответа должен быть 401').to.be.equal(401);
-  //   });
-  // });
+  describe('запрос GET /api/orders должен', () => {
+    before((done) => {
+      server = app.listen(port, done);
+    });
+
+    beforeEach(async () => {
+      await cleanUpDB();
+    });
+
+    after(async () => {
+      await cleanUpDB();
+      server.close();
+    });
+
+    it('вернуть список заказов текущего пользователя', async () => {
+      const userData = {
+        email: 'user@mail.com',
+        displayName: 'user',
+        password: '123123',
+      };
+      const token = 'token';
+      const user = await createUserAndSession(userData, token);
+
+      const categories = [
+        {
+          '_id': ObjectId('5d2f7e66a5a47618d7080a0f'),
+          'title': 'Детские товары и игрушки',
+          'subcategories': [
+            {
+              '_id': ObjectId('5d2f7e66a5a47618d7080a15'),
+              'title': 'Прогулки и детская комната',
+            },
+          ],
+        },
+      ];
+
+      await Category.insertMany(categories);
+
+      const products = [
+        {
+          '_id': ObjectId('5d2f7e66a5a47618d7080a1f'),
+          'title': 'Коляска Adamex Barletta 2 in 1',
+          'description': 'description',
+          'category': categories[0]._id,
+          'subcategory': categories[0].subcategories[0]._id,
+          'images': [
+            'http://magazilla.ru/jpg_zoom1/598194.jpg',
+          ],
+          'price': 21230,
+        },
+        {
+          '_id': ObjectId('5d2f7e66a5a47618d7080a2f'),
+          'title': 'Коляска Peg Perego Si',
+          'description': 'description',
+          'category': categories[0]._id,
+          'subcategory': categories[0].subcategories[0]._id,
+          'images': [
+            'http://magazilla.ru/jpg_zoom1/164281.jpg',
+          ],
+          'price': 15818,
+        },
+        {
+          '_id': ObjectId('5d2f7e66a5a47618d7080a3f'),
+          'title': 'Коляска Adamex Barletta 3 in 1',
+          'description': 'description',
+          'category': categories[0]._id,
+          'subcategory': categories[0].subcategories[0]._id,
+          'images': [
+            'http://magazilla.ru/jpg_zoom1/1220903.jpg',
+          ],
+          'price': 26701,
+        },
+      ];
+
+      await Product.insertMany(products);
+
+      const orders = [
+        {
+          product: products[0]._id,
+          phone: '1234567800',
+          address: 'home',
+          user: user.id,
+        },
+        {
+          product: products[1]._id,
+          phone: '1234567800',
+          address: 'home',
+          user: user.id,
+        },
+        // this order shouldn't be returned
+        {
+          product: products[2]._id,
+          phone: '1234567800',
+          address: 'home',
+          user: ObjectId(),
+        },
+      ];
+
+      await Order.insertMany(orders);
+
+      const {data} = await request({
+        method: 'get',
+        url: serverURL,
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+
+      expect(data.orders, 'ключ orders в ответе должел быть массивом').to.be.an('array');
+      expect(data.orders, 'в ответе должно быть 2 заказа').to.have.lengthOf(2);
+      expect(data.orders, 'ответ должен содержать только заказы текущего пользователя')
+          .to.satisfy(() => data.orders.every((order) => order.user = user.id));
+    });
+
+    it('вернуть ошибку со статусом 401 если пользователь не авторизован', async () => {
+      const {status} = await request({
+        method: 'post',
+        url: serverURL,
+      });
+
+      expect(status, 'статус код ответа должен быть 401').to.be.equal(401);
+    });
+  });
 });
