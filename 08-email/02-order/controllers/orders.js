@@ -8,7 +8,7 @@ module.exports.checkout = async function checkout(ctx, next) {
     return;
   }
 
-  const {product, phone, address} = ctx.query;
+  const {product, phone, address} = ctx.request.body;
 
   const order = await Order.create({
     user: ctx.user.id,

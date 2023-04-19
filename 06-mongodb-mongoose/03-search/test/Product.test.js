@@ -36,7 +36,7 @@ describe('mongodb-mongoose/search', () => {
       subcategory: category.subcategories[0].id,
       images: ['image1'],
     });
-  
+
     await Category.syncIndexes();
     await Product.syncIndexes();
 
@@ -67,11 +67,11 @@ describe('mongodb-mongoose/search', () => {
       expect(_index[1].weights).has.keys('title', 'description');
       expect(
           _index[1].weights.title,
-          'title имеет вес 10'
+          'title имеет вес 10',
       ).to.equal(10);
       expect(
           _index[1].weights.description,
-          'description имеет вес 5'
+          'description имеет вес 5',
       ).to.equal(5);
     });
 
@@ -90,17 +90,17 @@ describe('mongodb-mongoose/search', () => {
 
       expect(
           products,
-          '.products является массивом с двумя элементами'
+          '.products является массивом с двумя элементами',
       ).to.be.an('array').that.has.lengthOf(2);
 
       expect(
           products[0].title,
-          'первый элемент в списке с заголовком ProductA'
+          'первый элемент в списке с заголовком ProductA',
       ).to.equal('ProductA');
 
       expect(
           products[1].title,
-          'второй элемент в списке с заголовком ProductB'
+          'второй элемент в списке с заголовком ProductB',
       ).to.equal('ProductB');
     });
 
@@ -113,7 +113,7 @@ describe('mongodb-mongoose/search', () => {
 
       expect(
           products,
-          '.products является массивом с двумя элементами'
+          '.products является массивом с двумя элементами',
       ).to.be.an('array').that.has.lengthOf(0);
     });
   });
