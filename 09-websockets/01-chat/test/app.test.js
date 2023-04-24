@@ -40,7 +40,7 @@ describe('websockets/chat', () => {
       _server.close();
     });
 
-    it('неаутентифицированный клиент не может подключиться по вебсокету', (done) => {
+    it('не аутентифицированный клиент не может подключиться по вебсокету', (done) => {
       client = io('http://localhost:3000');
 
       client.on('connect_error', (err) => {
